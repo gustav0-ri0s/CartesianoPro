@@ -1,0 +1,5 @@
+{
+  "name": "Graficador de Variación Simple",
+  "description": "Herramienta escolar para graficar puntos en el plano cartesiano y visualizar su línea de tendencia de forma automática.",
+  "requestFramePermissions": []
+}
