@@ -138,7 +138,15 @@ const App: React.FC = () => {
           </section>
 
           <section className="bg-slate-900 border border-slate-800 rounded-[2rem] p-6 print:border-black print:p-4">
-            <h2 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-4 print:text-black">Tabla de Datos</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] print:text-black">Tabla de Puntos</h2>
+              <button 
+                onClick={() => setData([])} 
+                className="text-[10px] text-rose-500 font-bold hover:text-rose-400 uppercase tracking-wider no-print"
+              >
+                Vaciar
+              </button>
+            </div>
             <div className="border border-slate-800 rounded-xl overflow-hidden print:border-black">
               <table className="w-full text-xs text-center border-collapse">
                 <thead className="bg-slate-900 text-slate-500 font-black print:bg-slate-100 print:text-black print:border-b-2 print:border-black">
@@ -154,24 +162,31 @@ const App: React.FC = () => {
                     <tr key={i} className="border-b border-slate-800/40 print:border-black">
                       <td className="p-2 font-black text-indigo-500 print:text-black">{getPointLabel(i)}</td>
                       <td className="p-1 border-r border-slate-800 print:border-black">
-                        <input type="number" step="any" value={p.x} onChange={e => updatePoint(i, 'x', e.target.value)} className="w-full bg-transparent text-center py-2 text-indigo-300 no-print" />
+                        <input type="number" step="any" value={p.x} onChange={e => updatePoint(i, 'x', e.target.value)} className="w-full bg-transparent text-center py-2 text-indigo-300 no-print outline-none" />
                         <span className="hidden print:block">{p.x}</span>
                       </td>
                       <td className="p-1">
-                        <input type="number" step="any" value={p.y} onChange={e => updatePoint(i, 'y', e.target.value)} className="w-full bg-transparent text-center py-2 text-emerald-300 no-print" />
+                        <input type="number" step="any" value={p.y} onChange={e => updatePoint(i, 'y', e.target.value)} className="w-full bg-transparent text-center py-2 text-emerald-300 no-print outline-none" />
                         <span className="hidden print:block">{p.y}</span>
                       </td>
                       <td className="p-1 no-print">
-                        <button onClick={() => setData(data.filter((_, idx) => idx !== i))} className="text-slate-700"><Trash2 size={14}/></button>
+                        <button onClick={() => setData(data.filter((_, idx) => idx !== i))} className="text-slate-700 hover:text-rose-500 transition-colors">
+                          <Trash2 size={14}/>
+                        </button>
                       </td>
                     </tr>
                   ))}
+                  {data.length === 0 && (
+                    <tr>
+                      <td colSpan={4} className="p-8 text-slate-600 text-[10px] uppercase font-bold tracking-widest">No hay datos</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
             <button 
               onClick={() => setData([...data, {x: (data[data.length-1]?.x || 0) + 1, y: 0}])} 
-              className="w-full mt-4 py-3 bg-indigo-600/10 text-indigo-400 rounded-xl border border-indigo-500/20 font-black text-xs no-print"
+              className="w-full mt-4 py-3 bg-indigo-600/10 text-indigo-400 rounded-xl border border-indigo-500/20 font-black text-xs no-print hover:bg-indigo-600/20 transition-all"
             >
               AÑADIR PUNTO
             </button>
@@ -219,7 +234,8 @@ const App: React.FC = () => {
                     axisLine={{ stroke: '#000', strokeWidth: 1 }}
                   />
                   <Tooltip 
-                    contentStyle={{ backgroundColor: '#0f172a', color: '#fff' }}
+                    contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '12px', color: '#fff' }}
+                    itemStyle={{ color: '#818cf8' }}
                   />
                   {bestModel && (
                     <Line 
@@ -269,7 +285,9 @@ const App: React.FC = () => {
         <p className="text-[10px] font-black text-slate-700 uppercase tracking-[0.6em]">Cartesiano Pro V1.1</p>
         <div className="flex items-center gap-3">
           <p className="text-[9px] text-slate-800 font-bold">Gustavo Eduardo Rios Quevedo</p>
-          <a href="https://github.com/gustav0-ri0s" target="_blank" rel="noopener noreferrer" className="text-slate-700 hover:text-indigo-400"><Github size={16} /></a>
+          <a href="https://github.com/gustav0-ri0s" target="_blank" rel="noopener noreferrer" className="text-slate-700 hover:text-indigo-400 transition-colors">
+            <Github size={16} />
+          </a>
         </div>
       </footer>
     </div>
