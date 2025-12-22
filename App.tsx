@@ -97,7 +97,6 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 p-4 md:p-8 font-sans selection:bg-indigo-500/30">
       
-      {/* TÍTULO EXCLUSIVO PARA EL PDF */}
       <div className="hidden print:block mb-8 border-b-2 border-indigo-600 pb-4">
         <h1 className="text-3xl font-black text-slate-900 uppercase">Informe de Análisis Matemático</h1>
         <p className="text-sm font-bold text-indigo-600">Cartesiano Pro Lab • {new Date().toLocaleDateString()}</p>
@@ -117,7 +116,6 @@ const App: React.FC = () => {
            <button 
              onClick={handlePrint} 
              className="px-5 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs font-bold transition flex items-center gap-2 border border-slate-700"
-             title="Guardar como PDF / Imprimir"
            >
              <Printer size={14} /> EXPORTAR PDF
            </button>
@@ -129,7 +127,6 @@ const App: React.FC = () => {
 
       <main className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        {/* PANEL LATERAL: ENTRADA DE DATOS (OCULTO EN PDF) */}
         <div className="lg:col-span-4 space-y-6 no-print animate-in fade-in slide-in-from-left duration-700">
           <section className="bg-slate-900/50 border border-slate-800 rounded-[2rem] p-6 backdrop-blur-sm">
             <h2 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
@@ -177,11 +174,6 @@ const App: React.FC = () => {
                       </td>
                     </tr>
                   ))}
-                  {data.length === 0 && (
-                    <tr>
-                      <td colSpan={4} className="p-8 text-center text-slate-600 font-medium italic">Sin puntos definidos</td>
-                    </tr>
-                  )}
                 </tbody>
               </table>
             </div>
@@ -194,9 +186,7 @@ const App: React.FC = () => {
           </section>
         </div>
 
-        {/* PANEL PRINCIPAL: GRÁFICA Y RESULTADOS (OCUPA TODO EL ANCHO EN PDF) */}
         <div className="lg:col-span-8 space-y-6 animate-in fade-in zoom-in duration-1000 print:w-full">
-          
           <section className="bg-gradient-to-br from-indigo-600 to-indigo-900 border border-indigo-400/30 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden group">
             <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="space-y-4">
@@ -218,9 +208,6 @@ const App: React.FC = () => {
                 <p className="text-3xl font-black text-white print:text-indigo-900">{data.length}</p>
               </div>
             </div>
-            <div className="absolute -bottom-10 -right-10 opacity-10 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
-              <BookOpen size={240}/>
-            </div>
           </section>
 
           <section className="bg-slate-900 border border-slate-800 rounded-[3rem] p-8 h-[600px] shadow-2xl relative flex flex-col">
@@ -229,88 +216,34 @@ const App: React.FC = () => {
                 <div className="w-2 h-8 bg-indigo-500 rounded-full"></div>
                 <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em]">Plano de Coordenadas ({axisNames.x} vs {axisNames.y})</h2>
               </div>
-              <div className="flex gap-6 no-print">
-                 <div className="flex items-center gap-2 text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                    <div className="w-3 h-3 rounded-full bg-emerald-400 shadow-lg shadow-emerald-500/40"></div> Datos
-                 </div>
-                 <div className="flex items-center gap-2 text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                    <div className="w-6 h-1 rounded-full bg-rose-500 shadow-lg shadow-rose-500/40"></div> Tendencia
-                 </div>
-              </div>
             </div>
-            
             <div className="flex-1 w-full relative">
               <ResponsiveContainer width="100%" height="100%">
                 <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                   <CartesianGrid strokeDasharray="1 6" stroke="#1e293b" vertical={true} />
-                  
                   <ReferenceLine x={0} stroke="#f8fafc" strokeWidth={3} strokeOpacity={1} />
                   <ReferenceLine y={0} stroke="#f8fafc" strokeWidth={3} strokeOpacity={1} />
-                  
-                  <XAxis 
-                    type="number" 
-                    dataKey="x" 
-                    stroke="#475569" 
-                    tick={{fill: '#94a3b8', fontSize: 12, fontWeight: '900'}} 
-                    domain={chartDomain.x}
-                    axisLine={false}
-                    tickLine={false}
-                  />
-                  <YAxis 
-                    type="number" 
-                    dataKey="y" 
-                    stroke="#475569" 
-                    tick={{fill: '#94a3b8', fontSize: 12, fontWeight: '900'}} 
-                    domain={chartDomain.y}
-                    axisLine={false}
-                    tickLine={false}
-                  />
-                  
-                  <Tooltip 
-                    cursor={{ stroke: '#6366f1', strokeWidth: 1, strokeDasharray: '4 4' }}
-                    contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '16px', padding: '12px' }} 
-                    itemStyle={{ fontSize: '12px', fontWeight: '900', color: '#f8fafc' }}
-                  />
-                  
-                  {bestModel && (
-                    <Line 
-                      data={regressionLineData} 
-                      type="monotone" 
-                      dataKey="yModel" 
-                      stroke="#f43f5e" 
-                      strokeWidth={5} 
-                      dot={false} 
-                      isAnimationActive={false} 
-                    />
-                  )}
-                  
+                  <XAxis type="number" dataKey="x" stroke="#475569" tick={{fill: '#94a3b8', fontSize: 12, fontWeight: '900'}} domain={chartDomain.x} axisLine={false} tickLine={false} />
+                  <YAxis type="number" dataKey="y" stroke="#475569" tick={{fill: '#94a3b8', fontSize: 12, fontWeight: '900'}} domain={chartDomain.y} axisLine={false} tickLine={false} />
+                  <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '16px', padding: '12px' }} />
+                  {bestModel && <Line data={regressionLineData} type="monotone" dataKey="yModel" stroke="#f43f5e" strokeWidth={5} dot={false} isAnimationActive={false} />}
                   <Scatter name="Datos" data={data}>
                     {data.map((_, index) => (
                       <Cell key={`cell-${index}`} fill="#10b981" stroke="#f8fafc" strokeWidth={2} r={7} />
                     ))}
-                    <LabelList 
-                      dataKey="y" 
-                      content={(props: any) => {
+                    <LabelList dataKey="y" content={(props: any) => {
                         const { x, y, index } = props;
                         if (index === undefined || !data[index]) return null;
                         const label = getPointLabel(index);
                         const point = data[index];
                         return (
                           <g className="pointer-events-none">
-                            <text 
-                              x={x + 12} 
-                              y={y - 12} 
-                              fill="#6366f1" 
-                              fontSize={10} 
-                              fontWeight="900"
-                              className="print:fill-slate-900"
-                            >
+                            <text x={x + 12} y={y - 12} fill="#6366f1" fontSize={10} fontWeight="900" className="print:fill-slate-900">
                               {label}({point.x}, {point.y})
                             </text>
                           </g>
                         );
-                      }}
-                    />
+                    }} />
                   </Scatter>
                 </ScatterChart>
               </ResponsiveContainer>
@@ -319,7 +252,7 @@ const App: React.FC = () => {
 
           <section className="bg-indigo-600/5 border border-indigo-500/20 rounded-[2.5rem] p-8 relative overflow-hidden group hover:bg-indigo-600/10 transition-colors">
             <div className="flex items-start gap-6">
-              <div className="p-4 bg-indigo-500/20 rounded-[1.5rem] text-indigo-400 group-hover:scale-110 transition-transform print:border print:border-indigo-100">
+              <div className="p-4 bg-indigo-500/20 rounded-[1.5rem] text-indigo-400">
                 <Info size={28}/>
               </div>
               <div className="space-y-3 flex-1">
@@ -343,25 +276,12 @@ const App: React.FC = () => {
           <p className="text-[10px] font-black text-slate-700 uppercase tracking-[0.6em]">Graficador de funciones V 1.0</p>
           <div className="flex items-center justify-center gap-3">
             <p className="text-[9px] text-slate-800 font-bold">Creado por Gustavo Eduardo Rios Quevedo</p>
-            <a 
-              href="https://github.com/gustav0-ri0s" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-slate-700 hover:text-indigo-400 transition-colors"
-              title="Ver perfil de GitHub"
-            >
+            <a href="https://github.com/gustav0-ri0s" target="_blank" rel="noopener noreferrer" className="text-slate-700 hover:text-indigo-400 transition-colors">
               <Github size={14} />
             </a>
           </div>
         </div>
       </footer>
-
-      <style>{`
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #334155; }
-      `}</style>
     </div>
   );
 };

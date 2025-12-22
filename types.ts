@@ -41,5 +41,4 @@ export interface AppState {
   data: DataPoint[];
   selectedModelType: ModelType;
   decimalPlaces: number;
-  useAIExplanation: boolean;
 }
