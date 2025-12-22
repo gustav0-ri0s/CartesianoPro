@@ -3,7 +3,7 @@ import React, { useState, useMemo } from 'react';
 import { 
   Plus, Trash2, 
   Layers, Type, LineChart as LineChartIcon,
-  Calculator, Info, Printer, Github
+  Info, Printer, Github
 } from 'lucide-react';
 import { 
   XAxis, YAxis, CartesianGrid, Tooltip, 
@@ -87,10 +87,10 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-slate-950 text-slate-200 p-4 md:p-8 font-sans print:bg-white print:text-black print:p-0">
       
       {/* CABECERA EXCLUSIVA PDF */}
-      <div className="hidden print:block mb-6 border-b-4 border-black pb-4">
-        <h1 className="text-3xl font-black text-black uppercase tracking-tighter">Reporte de Análisis Matemático</h1>
-        <p className="text-xs font-bold text-slate-700 mt-1 uppercase tracking-widest">
-          Sistema Cartesiano Pro • {new Date().toLocaleDateString()} • {new Date().toLocaleTimeString()}
+      <div className="hidden print:block mb-8 border-b-4 border-black pb-4">
+        <h1 className="text-4xl font-black text-black uppercase tracking-tighter">Reporte Científico Cartesiano</h1>
+        <p className="text-sm font-bold text-slate-700 mt-2 uppercase tracking-widest">
+          {new Date().toLocaleDateString()} • {new Date().toLocaleTimeString()}
         </p>
       </div>
 
@@ -122,47 +122,47 @@ const App: React.FC = () => {
 
       <main className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 print:block">
         
-        {/* PANEL DE DATOS */}
         <div className="lg:col-span-4 space-y-6 print:w-full">
-          
-          <section className="bg-slate-900/50 border border-slate-800 rounded-[2rem] p-6 backdrop-blur-sm no-print">
-            <h2 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-              <Type size={14} className="text-indigo-400" /> Etiquetas
-            </h2>
+          <section className="bg-slate-900/50 border border-slate-800 rounded-[2rem] p-6 no-print">
+            <h2 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-4">Etiquetas</h2>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-[10px] font-bold text-slate-600 uppercase ml-1">Eje X</label>
-                <input type="text" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm focus:border-indigo-500 outline-none" value={axisNames.x} onChange={e => setAxisNames({...axisNames, x: e.target.value})} />
+                <label className="text-[10px] font-bold text-slate-600 uppercase">Eje X</label>
+                <input type="text" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-indigo-400 outline-none" value={axisNames.x} onChange={e => setAxisNames({...axisNames, x: e.target.value})} />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-bold text-slate-600 uppercase ml-1">Eje Y</label>
-                <input type="text" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm focus:border-emerald-500 outline-none" value={axisNames.y} onChange={e => setAxisNames({...axisNames, y: e.target.value})} />
+                <label className="text-[10px] font-bold text-slate-600 uppercase">Eje Y</label>
+                <input type="text" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-emerald-400 outline-none" value={axisNames.y} onChange={e => setAxisNames({...axisNames, y: e.target.value})} />
               </div>
             </div>
           </section>
 
-          <section className="bg-slate-900/50 border border-slate-800 rounded-[2rem] p-6 backdrop-blur-sm print:bg-white print:border-2 print:border-black print:rounded-none">
-            <h2 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] flex items-center gap-2 mb-4 print:text-black print:text-sm">
-              <Layers size={14} className="text-emerald-400 print:hidden" /> Tabla de Puntos
-            </h2>
-            <div className="overflow-hidden border border-slate-800 rounded-2xl print:border-black print:rounded-none">
+          <section className="bg-slate-900 border border-slate-800 rounded-[2rem] p-6 print:border-black print:p-4">
+            <h2 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-4 print:text-black">Tabla de Datos</h2>
+            <div className="border border-slate-800 rounded-xl overflow-hidden print:border-black">
               <table className="w-full text-xs text-center border-collapse">
-                <thead className="bg-slate-900 text-slate-500 uppercase font-black print:bg-slate-100 print:text-black print:border-b-2 print:border-black">
+                <thead className="bg-slate-900 text-slate-500 font-black print:bg-slate-100 print:text-black print:border-b-2 print:border-black">
                   <tr>
-                    <th className="p-2 border-r border-slate-800 print:border-black">Punto</th>
+                    <th className="p-2 border-r border-slate-800 print:border-black">ID</th>
                     <th className="p-2 border-r border-slate-800 print:border-black">{axisNames.x}</th>
                     <th className="p-2">{axisNames.y}</th>
                     <th className="w-10 no-print"></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="print:text-black">
                   {data.map((p, i) => (
-                    <tr key={i} className="border-b border-slate-800/40 print:border-black print:text-black">
-                      <td className="p-2 font-black text-indigo-500 border-r border-slate-800 print:border-black print:text-black">{getPointLabel(i)}</td>
-                      <td className="p-1 border-r border-slate-800 print:border-black font-mono">{p.x}</td>
-                      <td className="p-1 font-mono">{p.y}</td>
-                      <td className="p-1 pr-2 no-print">
-                        <button onClick={() => setData(data.filter((_, idx) => idx !== i))} className="text-slate-700 hover:text-rose-500"><Trash2 size={14}/></button>
+                    <tr key={i} className="border-b border-slate-800/40 print:border-black">
+                      <td className="p-2 font-black text-indigo-500 print:text-black">{getPointLabel(i)}</td>
+                      <td className="p-1 border-r border-slate-800 print:border-black">
+                        <input type="number" step="any" value={p.x} onChange={e => updatePoint(i, 'x', e.target.value)} className="w-full bg-transparent text-center py-2 text-indigo-300 no-print" />
+                        <span className="hidden print:block">{p.x}</span>
+                      </td>
+                      <td className="p-1">
+                        <input type="number" step="any" value={p.y} onChange={e => updatePoint(i, 'y', e.target.value)} className="w-full bg-transparent text-center py-2 text-emerald-300 no-print" />
+                        <span className="hidden print:block">{p.y}</span>
+                      </td>
+                      <td className="p-1 no-print">
+                        <button onClick={() => setData(data.filter((_, idx) => idx !== i))} className="text-slate-700"><Trash2 size={14}/></button>
                       </td>
                     </tr>
                   ))}
@@ -173,37 +173,35 @@ const App: React.FC = () => {
               onClick={() => setData([...data, {x: (data[data.length-1]?.x || 0) + 1, y: 0}])} 
               className="w-full mt-4 py-3 bg-indigo-600/10 text-indigo-400 rounded-xl border border-indigo-500/20 font-black text-xs no-print"
             >
-              + AÑADIR PUNTO
+              AÑADIR PUNTO
             </button>
           </section>
         </div>
 
-        {/* PANEL DE GRÁFICO */}
         <div className="lg:col-span-8 space-y-6 print:w-full">
-          
-          <section className="bg-gradient-to-br from-indigo-600 to-indigo-900 border border-indigo-400/30 rounded-[2.5rem] p-8 shadow-2xl print:bg-none print:bg-white print:border-2 print:border-black print:rounded-none print:shadow-none">
-            <p className="text-[10px] font-black text-indigo-200 uppercase tracking-[0.4em] print:text-black">Ecuación Encontrada</p>
+          <section className="bg-indigo-600 border border-indigo-400/30 rounded-[2.5rem] p-8 print:bg-white print:border-2 print:border-black">
+            <p className="text-[10px] font-black text-indigo-100 uppercase tracking-[0.4em] print:text-black">Ecuación de la Función</p>
             <h3 className="text-3xl md:text-5xl font-mono font-black text-white tracking-tighter print:text-black mt-2">
               {bestModel ? bestModel.formula : '---'}
             </h3>
             <div className="flex gap-4 mt-4">
-              <span className="px-3 py-1 bg-white/20 rounded-lg text-[10px] font-black text-white uppercase print:text-black print:border print:border-black">
-                {bestModel?.type || 'S/D'}
+              <span className="px-3 py-1 bg-white/20 rounded-lg text-[10px] font-black text-white uppercase print:text-black print:border-black print:border">
+                {bestModel?.type || 'No identificado'}
               </span>
-              <span className="text-indigo-100/60 text-[10px] font-bold uppercase print:text-black">
+              <span className="text-indigo-100/60 text-[10px] font-bold print:text-black">
                 R²: {bestModel?.rSquared.toFixed(4) || '0.0000'}
               </span>
             </div>
           </section>
 
-          <section className="bg-slate-900 border border-slate-800 rounded-[3rem] p-6 shadow-2xl relative flex flex-col print:bg-white print:border-2 print:border-black print:rounded-none print:shadow-none print:mb-8">
-            <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-4 print:text-black print:mb-6">Gráfico del Plano Cartesiano</h2>
-            <div className="flex-1 w-full chart-container-print" style={{ height: '480px' }}>
+          <section className="bg-slate-900 border border-slate-800 rounded-[2rem] p-8 shadow-2xl flex flex-col print:bg-white print:border-2 print:border-black print:rounded-none">
+            <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-6 print:text-black">Representación Gráfica del Plano</h2>
+            <div className="chart-wrapper" style={{ height: '500px' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <ScatterChart margin={{ top: 20, right: 30, bottom: 20, left: 10 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                  <ReferenceLine x={0} stroke="#f8fafc" strokeWidth={2} />
-                  <ReferenceLine y={0} stroke="#f8fafc" strokeWidth={2} />
+                  <ReferenceLine x={0} stroke="#f8fafc" strokeWidth={2} className="print:stroke-black" />
+                  <ReferenceLine y={0} stroke="#f8fafc" strokeWidth={2} className="print:stroke-black" />
                   <XAxis 
                     type="number" 
                     dataKey="x" 
@@ -219,6 +217,9 @@ const App: React.FC = () => {
                     tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 'bold'}} 
                     domain={chartDomain.y} 
                     axisLine={{ stroke: '#000', strokeWidth: 1 }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ backgroundColor: '#0f172a', color: '#fff' }}
                   />
                   {bestModel && (
                     <Line 
@@ -239,7 +240,7 @@ const App: React.FC = () => {
                         const { x, y, index } = props;
                         if (index === undefined || !data[index]) return null;
                         return (
-                          <text x={x + 10} y={y - 10} fill="#6366f1" fontSize={11} fontWeight="900" className="print:fill-black">
+                          <text x={x + 10} y={y - 10} fill="#6366f1" fontSize={12} fontWeight="900" className="print:fill-black">
                             {getPointLabel(index)}
                           </text>
                         );
@@ -250,7 +251,7 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          <section className="bg-indigo-600/5 border border-indigo-500/20 rounded-[2.5rem] p-8 print:bg-white print:border-2 print:border-black print:rounded-none">
+          <section className="bg-indigo-600/5 border border-indigo-500/20 rounded-[2rem] p-8 print:bg-white print:border-2 print:border-black">
             <div className="flex items-start gap-4">
               <Info className="text-indigo-400 shrink-0 print:text-black" size={24}/>
               <div className="space-y-1">

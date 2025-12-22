@@ -22,40 +22,54 @@
             print-color-adjust: exact !important;
         }
         
+        /* Garantizar que el gráfico sea visible siempre */
+        .chart-wrapper {
+            min-height: 480px;
+            width: 100%;
+            position: relative;
+        }
+
         @media print {
             @page {
-                margin: 1.5cm;
-                size: auto;
+                margin: 1cm;
+                size: portrait;
             }
             .no-print { display: none !important; }
+            
             body { 
                 background-color: white !important; 
                 color: black !important;
                 overflow: visible !important;
             }
+            
             #root {
                 background: white !important;
+                width: 100% !important;
                 display: block !important;
             }
-            /* Evitar que las secciones se partan entre hojas */
+
             section {
                 break-inside: avoid !important;
                 page-break-inside: avoid !important;
                 display: block !important;
-                margin-bottom: 2rem !important;
+                margin-bottom: 1.5rem !important;
                 border: 2px solid black !important;
                 background: white !important;
-                border-radius: 8px !important;
+                border-radius: 0 !important; /* Cuadros rectos en PDF */
+                padding: 1.5rem !important;
             }
-            h1, h2, h3, h4, p, span, td, th {
+
+            h1, h2, h3, h4, p, span, td, th, text {
                 color: black !important;
+                fill: black !important;
                 text-shadow: none !important;
             }
-            /* Asegurar que el gráfico no se desborde */
-            .chart-container-print {
-                height: 450px !important;
+
+            .chart-wrapper {
+                height: 420px !important; /* Altura controlada para PDF */
                 width: 100% !important;
                 overflow: hidden !important;
+                border: 1px solid #ccc !important;
             }
         }
     </style>
