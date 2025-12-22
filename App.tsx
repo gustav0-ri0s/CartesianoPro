@@ -8,7 +8,7 @@ import {
 import { 
   XAxis, YAxis, CartesianGrid, Tooltip, 
   ResponsiveContainer, ScatterChart, Scatter, 
-  Line, ReferenceLine, LabelList, Cell
+  Line, ReferenceLine, LabelList, Cell, Label
 } from 'recharts';
 
 import { DataPoint, ModelType } from './types';
@@ -213,7 +213,7 @@ const App: React.FC = () => {
             <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-6 print:text-black">Representación Gráfica del Plano</h2>
             <div className="chart-wrapper" style={{ height: '500px' }}>
               <ResponsiveContainer width="100%" height="100%">
-                <ScatterChart margin={{ top: 20, right: 30, bottom: 20, left: 10 }}>
+                <ScatterChart margin={{ top: 20, right: 30, bottom: 45, left: 35 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                   <ReferenceLine x={0} stroke="#f8fafc" strokeWidth={2} className="print:stroke-black" />
                   <ReferenceLine y={0} stroke="#f8fafc" strokeWidth={2} className="print:stroke-black" />
@@ -223,16 +223,37 @@ const App: React.FC = () => {
                     stroke="#475569" 
                     tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 'bold'}} 
                     domain={chartDomain.x} 
-                    axisLine={{ stroke: '#000', strokeWidth: 1 }}
-                  />
+                    axisLine={{ stroke: '#475569', strokeWidth: 1 }}
+                  >
+                    <Label 
+                      value={axisNames.x} 
+                      position="insideBottom" 
+                      offset={-25} 
+                      fill="#818cf8" 
+                      fontSize={12} 
+                      fontWeight="bold" 
+                      className="print:fill-black"
+                    />
+                  </XAxis>
                   <YAxis 
                     type="number" 
                     dataKey="y" 
                     stroke="#475569" 
                     tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 'bold'}} 
                     domain={chartDomain.y} 
-                    axisLine={{ stroke: '#000', strokeWidth: 1 }}
-                  />
+                    axisLine={{ stroke: '#475569', strokeWidth: 1 }}
+                  >
+                    <Label 
+                      value={axisNames.y} 
+                      angle={-90} 
+                      position="insideLeft" 
+                      offset={-15} 
+                      fill="#10b981" 
+                      fontSize={12} 
+                      fontWeight="bold" 
+                      className="print:fill-black"
+                    />
+                  </YAxis>
                   <Tooltip 
                     contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '12px', color: '#fff' }}
                     itemStyle={{ color: '#818cf8' }}
@@ -271,7 +292,7 @@ const App: React.FC = () => {
             <div className="flex items-start gap-4">
               <Info className="text-indigo-400 shrink-0 print:text-black" size={24}/>
               <div className="space-y-1">
-                <h4 className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] print:text-black">Conclusiones del Análisis</h4>
+                <h4 className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] print:text-black">Interpretación</h4>
                 <div className="text-slate-300 text-sm leading-relaxed font-medium print:text-black">
                   {interpretation}
                 </div>
